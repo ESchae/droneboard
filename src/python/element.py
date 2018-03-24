@@ -24,6 +24,7 @@ class Element(object):
         for parameter, value in params.items():
             if abs(self.__dict__[parameter] - value) >= threshold:
                 self.__dict__[parameter] = value
+                updated_something = True
         if updated_something:
             self.logger.info('Updated %s' % str(self))
             self.send_audio_parameters()
