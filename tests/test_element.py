@@ -1,5 +1,5 @@
 import unittest
-from element import Element, Octagon
+from src.python.element import Element, Octagon
 
 
 class TestElement(unittest.TestCase):
@@ -32,4 +32,4 @@ class TestElement(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    unittest.main()
+    unittest.main(warnings='ignore')

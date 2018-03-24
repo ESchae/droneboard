@@ -1,6 +1,6 @@
 import unittest
-from whiteboard import Whiteboard
-from element import Element
+from src.python.whiteboard import Whiteboard
+from src.python.element import Element
 
 
 class TestWhiteboard(unittest.TestCase):
@@ -50,4 +50,4 @@ class TestWhiteboard(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    unittest.main()
+    unittest.main(warnings='ignore')

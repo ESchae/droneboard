@@ -1,5 +1,5 @@
 import unittest
-from osc_handler import OSCHandler
+from src.python.osc_handler import OSCHandler
 
 
 class TestOSCHandler(unittest.TestCase):
@@ -19,4 +19,4 @@ class TestOSCHandler(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    unittest.main()
+    unittest.main(warnings='ignore')
