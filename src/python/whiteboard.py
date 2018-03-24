@@ -20,7 +20,7 @@ class Whiteboard(object):
 
     def update_element(self, element, threshold=0.3, **params):
         element.update_parameters(threshold, **params)
-        self.logger.info('Updated %s' % str(element))
+        # self.logger.info('Updated %s' % str(element))
 
     def get_element(self, element_id):
         for element in self.elements:

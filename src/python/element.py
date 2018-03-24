@@ -14,6 +14,7 @@ class Element(object):
         self.color = ids[self.id]['color']
         self.type = ids[self.id]['type']
         self.osc = OSCHandler()
+        self.logger = logging.getLogger(__name__)
 
     def __str__(self):
         return 'Element %s' % self.id
@@ -24,6 +25,7 @@ class Element(object):
             if abs(self.__dict__[parameter] - value) >= threshold:
                 self.__dict__[parameter] = value
         if updated_something:
+            self.logger.info('Updated %s' % str(self))
             self.send_audio_parameters()
 
     def send_audio_parameters(self):
@@ -46,7 +48,6 @@ class Octagon(Element):
 
     def __init__(self, id, rotation, x, y):
         super().__init__(id, rotation, x, y)
-        self.logger = logging.getLogger(__name__)
 
     def __str__(self):
         return 'Octagon %s (%s): %.2f rotation  %.2f x  %.2f y' \
