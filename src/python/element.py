@@ -1,5 +1,5 @@
-from osc_handler import OSCHandler
-from config import ids
+from src.python.osc_handler import OSCHandler
+from src.python.config import ids
 import logging
 
 

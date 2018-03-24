@@ -1,5 +1,5 @@
 import logging
-from element import Element
+from src.python.element import Element
 
 
 class Whiteboard(object):
