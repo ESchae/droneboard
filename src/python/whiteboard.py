@@ -1,5 +1,5 @@
 import logging
-from src.python.element import Element
+from element import Element
 
 
 class Whiteboard(object):
@@ -9,10 +9,12 @@ class Whiteboard(object):
         self.logger = logging.getLogger(__name__)
 
     def add_element(self, element):
+        element.send_audio_parameters()
         self.elements.append(element)
         self.logger.info('Added %s' % str(element))
 
     def delete_element(self, element):
+        element.stop_audio()
         self.elements.remove(element)
         self.logger.info('Deleted %s' % str(element))
 

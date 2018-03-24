@@ -1,5 +1,5 @@
-from src.python.osc_handler import OSCHandler
-from src.python.config import ids
+from osc_handler import OSCHandler
+from config import ids
 import logging
 
 
@@ -19,9 +19,20 @@ class Element(object):
         return 'Element %s' % self.id
 
     def update_parameters(self, threshold=0.3, **params):
+        updated_something = False
         for parameter, value in params.items():
             if abs(self.__dict__[parameter] - value) >= threshold:
                 self.__dict__[parameter] = value
+        if updated_something:
+            self.send_audio_parameters()
+
+    def send_audio_parameters(self):
+        """ Abstract method to be implemented in every child class. """
+        pass
+
+    def stop_audio(self):
+        """ Abstract method to be implemented in every child class. """
+        pass
 
     @staticmethod
     def factory(**kwargs):
@@ -41,12 +52,11 @@ class Octagon(Element):
         return 'Octagon %s (%s): %.2f rotation  %.2f x  %.2f y' \
                % (self.id, self.color, self.rotation, self.x, self.y)
 
-    def set_parameters(self, rotation, x, y):
-        self.x = x
-        self.y = y
-        self.rotation = rotation
-
     def send_audio_parameters(self):
         args = [self.id, self.rotation, self.x, self.y]
-        self.logger.info('Setting parameters: %s' % str(self))
+        self.logger.debug('Setting parameters: %s' % str(self))
         self.osc.send_msg(args)
+
+    def stop_audio(self):
+        self.update_parameters(threshold=0, rotation=0, x=0, y=0)
+        self.send_audio_parameters()
