@@ -6,9 +6,9 @@ import logging
 class Element(object):
     """ Abstract class representing an element on the Whiteboard. """
 
-    def __init__(self, id, color, x, y):
+    def __init__(self, id, rotation, x, y):
         self.id = id
-        self.color = color
+        self.rotation = rotation
         self.x = x
         self.y = y
         self.color = ids[self.id]['color']
@@ -44,16 +44,16 @@ class Element(object):
 
 class Octagon(Element):
 
-    def __init__(self, id, color, x, y):
-        super().__init__(id, color, x, y)
+    def __init__(self, id, rotation, x, y):
+        super().__init__(id, rotation, x, y)
         self.logger = logging.getLogger(__name__)
 
     def __str__(self):
-        return 'Octagon %s (%s) - x: %.2f  y: %.2f' \
-               % (self.id, self.color, self.x, self.y)
+        return 'Octagon %s (%s): %.2f rotation  %.2f x  %.2f y' \
+               % (self.id, self.color, self.rotation, self.x, self.y)
 
     def send_audio_parameters(self):
-        args = [self.id, self.color, self.x, self.y]
+        args = [self.id, self.rotation, self.x, self.y]
         self.logger.debug('Setting parameters: %s' % str(self))
         self.osc.send_msg(args)
 
