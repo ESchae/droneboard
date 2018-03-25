@@ -7,11 +7,30 @@ import detect_whiteboard
 import util
 import logging
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 
 from whiteboard import Whiteboard
 
 wb = Whiteboard()
+
+# blue range in HSV
+lower_blue = np.array([80,50,50])
+upper_blue = np.array([130,255,255])
+
+lower_brown = np.array([10, 100, 20])
+upper_brown = np.array([20, 255, 200])
+
+lower_yellow = np.array([20,100,100])
+upper_yellow = np.array([30,255,255])
+
+s = 15
+lower_red = np.array([170-s,70,30])
+upper_red = np.array([180+s,255,255])
+
+lower_green = np.array([65,60,60])
+upper_green = np.array([80,255,255])
+
+
 
 def circles2dict(circles, width, height, id_, rotation):
     if type(circles) != np.ndarray:
@@ -34,10 +53,10 @@ def main_loop():
         _, frame = cap.read()
         c = detect_whiteboard.detect_whiteboard(frame)
         margin_whiteboard += c
+        cv2.waitKey(1)
 
-        k = cv2.waitKey(5) & 0xFF
-        if k == 27:
-            break
+    cv2.destroyWindow("whiteboard margin")
+    cv2.waitKey(1)
 
     cluster = detect_whiteboard.corners(margin_whiteboard)
     p1 = list(map(math.floor, cluster[0]))
@@ -47,29 +66,12 @@ def main_loop():
     ymin, ymax = sorted([p1[1],p2[1]])
     w = xmax - xmin
     h = ymax - ymin
-    eps = 10
+    eps = 20
 
     while(1):
         # Take each frame
         _, frame = cap.read()
-        frame = frame[ymin-eps:ymax+eps, xmin+eps:xmax-eps]
-
-        # blue range in HSV
-        lower_blue = np.array([80,50,50])
-        upper_blue = np.array([130,255,255])
-
-        lower_brown = np.array([10, 100, 20])
-        upper_brown = np.array([20, 255, 200])
-
-        lower_yellow = np.array([20,100,100])
-        upper_yellow = np.array([30,255,255])
-
-        s = 15
-        lower_red = np.array([170-s,70,30])
-        upper_red = np.array([180+s,255,255])
-
-        lower_green = np.array([65,60,60])
-        upper_green = np.array([80,255,255])
+        frame = frame[ymin+eps:ymax-eps, xmin+eps:xmax-eps]
 
         if frame_counter % 5 == 0:
             circles_blue = control_knob.detect_circles(frame, lower_blue, upper_blue)
@@ -83,7 +85,9 @@ def main_loop():
             
             wb.update(c)
 
-        k = cv2.waitKey(5) & 0xFF
+        
+        cv2.imshow("frame", frame)
+        k = cv2.waitKey(1) & 0xFF
         if k == 27:
             break
 

@@ -22,8 +22,6 @@ def detect_circles(frame, lower, upper, windowname = "detect circles"):
     # Bitwise AND mask 
     res = cv2.bitwise_and(frame, frame, mask=mask)
 
-    #cv2.imshow('mask',mask)
-    #cv2.imshow('res',res)
 
     gray = cv2.cvtColor(res, cv2.COLOR_BGR2GRAY)
     gray = cv2.medianBlur(gray, 7)
@@ -32,15 +30,17 @@ def detect_circles(frame, lower, upper, windowname = "detect circles"):
                                cv2.HOUGH_GRADIENT,
                                1,
                                20, 
-                               param1=30,    # 50
+                               param1=50,    # 50
                                param2=10,    # 30
-                               minRadius=1,
+                               minRadius=3,
                                maxRadius=50)
 
 
     if type(circles) == np.ndarray:
         circles = np.uint16(np.around(circles))
-        util.draw_circles(frame, "frame", circles)
+        util.draw_circles(frame, windowname, circles)
 
         return circles
+
+    return []
 
