@@ -22,7 +22,7 @@ OSCdef(\params,
 
 		msg2.postln;
 	},
-	'/params', recvPort:50001);
+	'/params', recvPort:50000);
 
 
 ///////////// set up sound environment
@@ -117,7 +117,7 @@ p.fadeTime = 4;
 // tube, whisper, bee, bassrumble (, glitch)
 
 (
-m = NetAddr("127.0.0.1", 50001);
+m = NetAddr("127.0.0.1", 50000);
 
 m.sendMsg('/params', 3, 1, 0.5)
 
