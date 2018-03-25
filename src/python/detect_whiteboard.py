@@ -41,14 +41,12 @@ def detect_whiteboard(frame):
     # Bitwise AND mask -- original image
     whiteboard = cv2.bitwise_and(frame,frame, mask=mask)
 
-    #cv2.imshow('whiteboard', whiteboard)
     circles = control_knob.detect_circles(whiteboard, lower_red, upper_red, "whiteboard margin")
 
-    if circles == None:
+    if type(circles) != np.ndarray:
         return []
 
     circles_coords = [[xy[0], xy[1]] for xy in circles[0,:]]
 
     return circles_coords
-
 

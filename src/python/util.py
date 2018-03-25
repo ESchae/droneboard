@@ -11,5 +11,5 @@ def draw_circles(frame, window_name, circles):
 
     #cv2.namedWindow(window_name, cv2.WINDOW_NORMAL)
     cv2.imshow(window_name, frame)
- 
+    cv2.waitKey(20)
 
